@@ -36,22 +36,11 @@
         <activity
             android:name=".PlaceholderActivity"
             android:exported="false"
-            android:label="PlaceholderActivity" />
+            android:label="Placeholder Activity" />
 
         <property
             android:name="android.window.PROPERTY_ACTIVITY_EMBEDDING_SPLITS_ENABLED"
             android:value="true" />
-
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:exported="false"
-            tools:node="merge">
-            <!-- Make SplitInitializer discoverable by InitializationProvider. -->
-            <meta-data
-                android:name="${applicationId}.SplitInitializer"
-                android:value="androidx.startup" />
-        </provider>
 
     </application>
 
