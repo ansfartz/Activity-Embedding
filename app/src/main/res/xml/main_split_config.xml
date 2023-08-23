@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SplitPairRule
+        splitRatio — Specifies how much of the task window is occupied by the primary activity (33%),
+        leaving the remaining space for the secondary activity.
+
+        splitMinWidthDp — Specifies the minimum display width (840) required for both activities
+        to be on screen simultaneously. Units are display-independent pixels (dp)
+
+        (Note: 840dp is the breakpoint for the expanded window size class - https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes#window_size_classes)
+
+        finishPrimaryWithSecondary — Specifies whether activities in the primary split container
+        finish (never) when all activities in the secondary container finish
+
+        finishSecondaryWithPrimary — Specifies whether activities in the secondary split container
+        finish (always) when all activities in the primary container activity finish
+
+        Includes a split filter that defines the activities that share a task window split.
+        The primary activity is ListActivity; the secondary is DetailActivity
+
+    SplitPlaceholderRule
+        A placeholder activity occupies the secondary container of an activity split when
+        no content is available for that container, for example, when a list-detail split opens but
+        a list item has not yet been selected.
+
+        placeholderActivityName - Identifies the placeholder activity
+
+        splitRatio — Specifies how much of the task window is occupied by the primary activity (33%),
+        leaving the remaining space for the placeholder.
+        Typically, this value should match the split ratio of the split pair rule with which the placeholder is associated.
+
+        splitMinWidthDp — Specifies the minimum display width (840) required for the placeholder
+        to appear on screen with the primary activity.
+        Typically, this value should match the minimum width of the split pair rule with which the placeholder is associated. Units are display-independent pixels (dp).
+
+        finishPrimaryWithPlaceholder — Specifies whether activities in the primary split container finish
+        (always) when the placeholder finishes
+
+        stickyPlaceholder — Indicates whether the placeholder should remain on screen (false) as the
+        top activity when the display is resized down to a single-pane display from a two-pane display,
+        for example, when a foldable device is folded.
+
+        ActivityFilter — Includes an activity filter that specifies the activity (ListActivity)
+        with which the placeholder shares a task window split.
+
+    ActivityRule
+        Activity rules are general purpose rules. Activities that you want to occupy the entire
+        task window—that is, never be part of a split—can be specified with an activity rule.
+        (For more information, see Full-window modal in the Activity embedding developer guide - https://developer.android.com/guide/topics/large-screens/activity-embedding#full-window_modal)
+
+        alwaysExpand — Specifies whether or not the activity should expand to fill all available display space.
+
+
+-->
+<resources xmlns:window="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Define a split for the named activity pair. -->
+    <SplitPairRule
+        window:splitRatio="@dimen/my_split_ratio"
+        window:splitMinWidthDp="@dimen/my_split_minWidth_dp"
+        window:finishPrimaryWithSecondary="never"
+        window:finishSecondaryWithPrimary="always"
+
+        window:splitMaxAspectRatioInPortrait="alwaysAllow"
+        window:splitMaxAspectRatioInLandscape="alwaysAllow"
+        >
+        <SplitPairFilter
+            window:primaryActivityName=".ListActivity"
+            window:secondaryActivityName=".DetailActivity" />
+    </SplitPairRule>
+
+
+    <!-- Automatically launch a placeholder for the detail activity. -->
+    <SplitPlaceholderRule
+        window:placeholderActivityName=".PlaceholderActivity"
+        window:splitRatio="@dimen/my_split_ratio"
+        window:splitMinWidthDp="@dimen/my_split_minWidth_dp"
+        window:finishPrimaryWithPlaceholder="always"
+        window:stickyPlaceholder="false"
+
+        window:splitMaxAspectRatioInPortrait="alwaysAllow"
+        window:splitMaxAspectRatioInLandscape="alwaysAllow"
+        >
+        <ActivityFilter
+            window:activityName=".ListActivity"/>
+    </SplitPlaceholderRule>
+
+
+    <!-- Activities that should never be in a split. -->
+    <ActivityRule
+        window:alwaysExpand="true">
+        <ActivityFilter
+            window:activityName=".SummaryActivity"/>
+    </ActivityRule>
+
+</resources>
+
