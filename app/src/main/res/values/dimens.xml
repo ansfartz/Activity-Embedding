@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="my_split_ratio" type="dimen" format="float">0.33</item>
+    <!-- <dimen name="my_split_ratio">0.33</dimen> -->
+
+    <item name="my_split_minWidth_dp" type="dimen" format="integer">840</item>
+    <!-- <dimen name="my_split_minWidth_dp">840</dimen> -->
+
+</resources>
